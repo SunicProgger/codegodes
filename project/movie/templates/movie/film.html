@@ -1,0 +1,39 @@
+{% extends "movie/wrapper.html" %}
+
+{% block include %}
+<div class="col-12 d-flex justify-content-between" style="padding: 10px;">
+	<div class="col-auto" style="color: white;font-size: 18px;font-weight: bold;">{{f.name}}</div>
+	<div class="col-auto" style="width: 150px;height: 5px;margin-top: 10px;">
+		<div class="row d-flex justify-content-between" style="height: 100%"><div style="width: {{f.prepos}}%;background-color: green;height: 100%;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></div><div style="width: {{f.preneg}}%;background-color: red;height: 100%;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"></div></div>
+		<div class="row d-flex justify-content-between"><div style="color: green;font-size: 12px;">{{f.pos}}</div><div style="color: red;font-size: 12px;">{{f.neg}}</div></div>
+	</div>
+</div>
+<div class="col-12" style="padding: 0;color: white;padding-bottom: 20px;">
+	<div class="col-12 d-flex justify-content-between">
+		<div class="col-5"><img src="{{f.image}}" width="200px" height="300px"></div>
+		<div class="col-7" style="position: relative;">
+			<div class="col-12" style="max-height: 200px;overflow: hidden;padding: 0;margin: 0;"><span style="font-size: 16px;text-align: justify;">{{f.large_title}}</span></div>
+		</div>
+	</div>
+	<div class="col-12">
+		<div class="col-12" style="position: relative;">
+			<br>
+			<span style="font-weight: bold;">Release year: </span>{% if f.year > 2014 %}<a class="a-name" href="/y{{f.year}}/">{{f.year}}</a>{% else %}{{f.year}}{% endif %}
+			<br>
+			<span style="font-weight: bold;">Country: </span><a class="a-name" href="/country_{{i.country}}">{{f.country}}</a>
+			<br>
+			<span style="font-weight: bold;">Categories:</span> {% for j in f.categories %}<a class="a-name" href="/category_{{j}}">{{j}}</a> {% endfor %} 
+			<br>
+			<span style="font-weight: bold;">Time:</span> {{f.time}}
+			<br>
+			<span style="font-weight: bold;">Date of release:</span> {{f.date}}
+			<br><br>
+			<span style="font-weight: bold;">Director:</span> {{f.director}}
+			<br>
+			<span style="font-weight: bold;">In roles:</span> {{f.roles}}
+			<br>
+		</div>
+	</div>
+	<div class="col-12"><iframe style="width: 520px;height: 292px;margin: 20px 0 0 15px;" src="{{f.link}}" frameborder="0" allow="autoplay" allowfullscreen></iframe></div>
+</div>
+{% endblock %}

@@ -8,3 +8,13 @@ $('#trailer').click(function () {
 	$(this).hide();
 	$(this).html('');
 });
+
+$('#open-auth').click(function () {
+	// $('#auth-block').show();
+	$('#auth-block').slideDown(20);
+});
+
+function auth() {
+	window.scrollTo(0, 0);
+	$('#auth-block').slideDown(20);
+}

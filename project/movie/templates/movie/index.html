@@ -13,7 +13,7 @@
 {% for i in films %}
 <div class="col-12 film-block" style="padding: 0;">
 	<div class="col-12 d-flex justify-content-between" style="padding: 10px;">
-		<div class="col-auto" style="color: white;font-size: 18px;font-weight: bold;"><a class="a-name" href="">{{i.name}}</a></div>
+		<div class="col-auto" style="color: white;font-size: 18px;font-weight: bold;"><a class="a-name" href="/{{i.id}}" style="{% if user.get_age < i.age %}pointer-events: none;{% endif %}">{{i.name}}</a> <span style="color: yellow;font-size: 20px;">{% if i.cost > 0 %}({{i.cost}}Rub){% else %}(Free){% endif %}</span></div>
 		<div class="col-auto" style="width: 150px;height: 5px;margin-top: 10px;">
 			<div class="row d-flex justify-content-between" style="height: 100%"><div style="width: {{i.prepos}}%;background-color: green;height: 100%;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></div><div style="width: {{i.preneg}}%;background-color: red;height: 100%;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"></div></div>
 			<div class="row d-flex justify-content-between"><div style="color: green;font-size: 12px;">{{i.pos}}</div><div style="color: red;font-size: 12px;">{{i.neg}}</div></div>
@@ -27,9 +27,9 @@
 				<div class="col-12" style="position: absolute;height: 100px;bottom: 0;">
 					<span style="font-weight: bold;">Release year: </span>{% if i.year > 2014 %}<a class="a-name" href="/y{{i.year}}/">{{i.year}}</a>{% else %}{{i.year}}{% endif %}
 					<br>
-					<span style="font-weight: bold;">Country:</span> {{i.country}}
+					<span style="font-weight: bold;">Country: </span><a class="a-name" href="/country_{{i.country}}">{{i.country}}</a>
 					<br>
-					<span style="font-weight: bold;">Categories:</span> {% for j in i.categories %}<a class="a-name" href="/">{{j}}</a> {% endfor %} 
+					<span style="font-weight: bold;">Categories:</span> {% for j in i.categories %}<a class="a-name" href="/category_{{j}}">{{j}}</a> {% endfor %} 
 					<br>
 					<span style="font-weight: bold;">Time:</span> {{i.time}}
 					<br>
@@ -38,7 +38,11 @@
 			</div>
 		</div>
 		<div class="col-12 inline-row" style="margin-top: 10px;margin-left: 15px;">
-			<div class="btn-watch-trailer">Watch online</div>
+			{% if i.has or i.cost == 0 %}
+			<a href="/{{i.id}}" style="{% if user.get_age < i.age %}pointer-events: none;{% endif %}"><div class="btn-watch-trailer">Watch online</div></a>
+			{% else %}
+			<div class="btn-watch-trailer" style="position: relative;"><span>Buy now</span>s{% if user.is_authenticated %}<iframe src="https://money.yandex.ru/quickpay/button-widget?targets=Оплата..&" style="position: absolute;left: 0;top: 0;opacity: 0;width: 65px;height: 20px;{% if user.get_age < i.age %}pointer-events: none;{% endif %}" frameborder="0" allowtransparency="true" scrolling="no"></iframe>{% else %}<div style="width: 65px;height: 20px;position: absolute;left: 0;top: 0;" onclick="auth();"></div>{% endif %}</div>
+			{% endif %}
 			<div class="btn-watch-trailer" onclick="trailer('{{i.trailer}}');">Trailer</div>
 		</div>
 	</div>

@@ -7,7 +7,10 @@ from . import views
 
 urlpatterns = [
 	url(r'^$', views.index, name="index"),
-    url(r'', include('social_auth.urls')),
+	url(r'login/', views.login, name="login"),
+	url(r'logout/', views.logout, name="logout"),
+	url(r'search/', views.search, name="search"),
+	url(r'(?P<film>[0-9]+)/$', views.getfilm),
 	url(r'y(?P<year>[0-9]+)/$', views.findyear),
 	url(r'category_(?P<category>[\w-]+)/$', views.findcat),
 	url(r'country_(?P<country>[\w-]+)/$', views.findcountry),

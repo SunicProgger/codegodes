@@ -102,3 +102,50 @@ body {
 	z-index: 100;
 	background-color: rgba(0,0,0,0.7);
 }
+
+#open-auth:hover {
+	text-decoration: underline;
+}
+
+#auth-block {
+	display: none;
+	position: absolute;
+	right: 10px;
+	top: 30px;
+	background-color: white;
+	width: 230px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.auth-input {
+	position: relative;
+	width: 200px;
+	margin: 5px 0;
+	margin-left: 15px;
+	border: 2px solid lightblue;
+	border-radius: 5px;
+	padding-left: 2px;
+}
+
+#register-link:hover {
+	text-decoration: underline;
+}
+
+#auth-button {
+	width: 60px;
+	height: 20px;
+	background-color: green;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 1px 5px;
+	line-height: 20px;
+	margin-left: 15px;
+	cursor: pointer;
+}
+
+#auth-button:hover {
+	text-decoration: underline;
+	background-color: darkgreen;
+}
