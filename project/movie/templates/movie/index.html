@@ -2,7 +2,13 @@
 
 {% block include %}
 {% if year %}
-<div class="row d-flex justify-content-center" style="color: white;font-size: 18px;border-bottom: 1px solid #171717;margin: 0;">Раздел с фильмами {{year}} года</div>
+<div class="row d-flex justify-content-center" style="color: white;font-size: 18px;border-bottom: 1px solid #171717;margin: 0;">Movies released in {{year}} year.</div>
+{% endif %}
+{% if category %}
+<div class="row d-flex justify-content-center" style="color: white;font-size: 18px;border-bottom: 1px solid #171717;margin: 0;">{{category}} movies</div>
+{% endif %}
+{% if country %}
+<div class="row d-flex justify-content-center" style="color: white;font-size: 18px;border-bottom: 1px solid #171717;margin: 0;">Movies from {{country}} {% if country == 'others' %} countries{% endif %}</div>
 {% endif %}
 {% for i in films %}
 <div class="col-12 film-block" style="padding: 0;">

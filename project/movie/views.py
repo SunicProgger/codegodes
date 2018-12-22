@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render, render_to_response, redirect 
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse
 from django.shortcuts import get_object_or_404
@@ -17,6 +19,7 @@ def index(request):
 	i = Film()
 	for i in d:
 		dn = {}
+		dn["id"] = i.id
 		dn["name"] = i.name
 		dn["year"] = i.year
 		dn["age"] = i.age
@@ -52,40 +55,34 @@ def index(request):
 			ss = (str)(s)
 		dn["time"] = hs+":"+ms+":"+ss
 		films.append(dn)
-		# films[i]["t"]=hs+":"+ms+":"+ss
 	return render(request, "movie/index.html", {"films":films})
-	for i in range(0, len(d["films"])):
-		films.append(d["films"][i])
-		films[i]["plus"]=(d["films"][i]["pos"])*100/(d["films"][i]["neg"]+d["films"][i]["pos"])
-		films[i]["minus"]=100-films[i]["plus"]
-		t = d["films"][i]["time"]
-		h = (int)(t/3600)
-		m = (int)(t/60-h*60)
-		s = (int)(t-h*3600-m*60)
-		if h < 10:
-			hs = "0"+(str)(h)
-		else:
-			hs = (str)(h)
-		if m < 10:
-			ms = "0"+(str)(m)
-		else:
-			ms = (str)(m)
-		if s < 10:
-			ss = "0"+(str)(s)
-		else:
-			ss = (str)(s)
-		films[i]["t"]=hs+":"+ms+":"+ss
-	return render(request, 'movie/index.html', {"films":films})
 
 def findyear(request, year):
 	films = []
-	d = json.load(open('movie/templates/movie/films.json', encoding="utf8"))
-	for i in range(0, len(d["films"])):
-		if d["films"][i]["year"] == (int)(year):
-			films.append(d["films"][i])
-			films[len(films)-1]["plus"]=(d["films"][i]["pos"])*100/(d["films"][i]["neg"]+d["films"][i]["pos"])
-			films[len(films)-1]["minus"]=100-films[len(films)-1]["plus"]
-			t = d["films"][i]["time"]
+	d = Film.objects.all()
+	i = Film()
+	for i in d:
+		if i.year == (int)(year):
+			dn = {}
+			dn["id"] = i.id
+			dn["name"] = i.name
+			dn["year"] = i.year
+			dn["age"] = i.age
+			dn["date"] = i.date
+			dn["country"] = i.country
+			dn["image"] = i.image.url
+			dn["pos"] = i.pos
+			dn["neg"] = i.neg 
+			dn["prepos"] = (i.pos*100/(i.pos+i.neg))
+			dn["preneg"] = 100-dn["prepos"]
+			dn["categories"] = []
+			cats = i.categories.split(' ')
+			for j in cats:
+				dn["categories"].append(j)
+			dn["small_title"] = i.small_title
+			dn["large_title"] = i.large_title
+			dn["trailer"] = i.trailer
+			t = i.time
 			h = (int)(t/3600)
 			m = (int)(t/60-h*60)
 			s = (int)(t-h*3600-m*60)
@@ -101,5 +98,138 @@ def findyear(request, year):
 				ss = "0"+(str)(s)
 			else:
 				ss = (str)(s)
-			films[len(films)-1]["t"]=hs+":"+ms+":"+ss
-	return render(request, 'movie/index.html', {"films":films, "year":year})
+			dn["time"] = hs+":"+ms+":"+ss
+			films.append(dn)
+	return render(request, "movie/index.html", {"films":films, "year":year})
+
+def findcat(request, category):
+	films = []
+	d = Film.objects.all()
+	i = Film()
+	for i in d:
+		cats = i.categories.split(' ')
+		if category in cats:
+			dn = {}
+			dn["id"] = i.id
+			dn["name"] = i.name
+			dn["year"] = i.year
+			dn["age"] = i.age
+			dn["date"] = i.date
+			dn["country"] = i.country
+			dn["image"] = i.image.url
+			dn["pos"] = i.pos
+			dn["neg"] = i.neg 
+			dn["prepos"] = (i.pos*100/(i.pos+i.neg))
+			dn["preneg"] = 100-dn["prepos"]
+			dn["categories"] = []
+			cats = i.categories.split(' ')
+			for j in cats:
+				dn["categories"].append(j)
+			dn["small_title"] = i.small_title
+			dn["large_title"] = i.large_title
+			dn["trailer"] = i.trailer
+			t = i.time
+			h = (int)(t/3600)
+			m = (int)(t/60-h*60)
+			s = (int)(t-h*3600-m*60)
+			if h < 10:
+				hs = "0"+(str)(h)
+			else:
+				hs = (str)(h)
+			if m < 10:
+				ms = "0"+(str)(m)
+			else:
+				ms = (str)(m)
+			if s < 10:
+				ss = "0"+(str)(s)
+			else:
+				ss = (str)(s)
+			dn["time"] = hs+":"+ms+":"+ss
+			films.append(dn)
+	return render(request, "movie/index.html", {"films":films, "category":category})
+
+def findcountry(request, country):
+	films = []
+	d = Film.objects.all()
+	i = Film()
+	for i in d:
+		if country != "others":
+			if country == i.country:
+				dn = {}
+				dn["id"] = i.id
+				dn["name"] = i.name
+				dn["year"] = i.year
+				dn["age"] = i.age
+				dn["date"] = i.date
+				dn["country"] = i.country
+				dn["image"] = i.image.url
+				dn["pos"] = i.pos
+				dn["neg"] = i.neg 
+				dn["prepos"] = (i.pos*100/(i.pos+i.neg))
+				dn["preneg"] = 100-dn["prepos"]
+				dn["categories"] = []
+				cats = i.categories.split(' ')
+				for j in cats:
+					dn["categories"].append(j)
+				dn["small_title"] = i.small_title
+				dn["large_title"] = i.large_title
+				dn["trailer"] = i.trailer
+				t = i.time
+				h = (int)(t/3600)
+				m = (int)(t/60-h*60)
+				s = (int)(t-h*3600-m*60)
+				if h < 10:
+					hs = "0"+(str)(h)
+				else:
+					hs = (str)(h)
+				if m < 10:
+					ms = "0"+(str)(m)
+				else:
+					ms = (str)(m)
+				if s < 10:
+					ss = "0"+(str)(s)
+				else:
+					ss = (str)(s)
+				dn["time"] = hs+":"+ms+":"+ss
+				films.append(dn)
+		else:
+			c = i.country
+			if c != "USA" and c != "Russia" and c != "Germany" and c != "France":
+				dn = {}
+				dn["id"] = i.id
+				dn["name"] = i.name
+				dn["year"] = i.year
+				dn["age"] = i.age
+				dn["date"] = i.date
+				dn["country"] = i.country
+				dn["image"] = i.image.url
+				dn["pos"] = i.pos
+				dn["neg"] = i.neg 
+				dn["prepos"] = (i.pos*100/(i.pos+i.neg))
+				dn["preneg"] = 100-dn["prepos"]
+				dn["categories"] = []
+				cats = i.categories.split(' ')
+				for j in cats:
+					dn["categories"].append(j)
+				dn["small_title"] = i.small_title
+				dn["large_title"] = i.large_title
+				dn["trailer"] = i.trailer
+				t = i.time
+				h = (int)(t/3600)
+				m = (int)(t/60-h*60)
+				s = (int)(t-h*3600-m*60)
+				if h < 10:
+					hs = "0"+(str)(h)
+				else:
+					hs = (str)(h)
+				if m < 10:
+					ms = "0"+(str)(m)
+				else:
+					ms = (str)(m)
+				if s < 10:
+					ss = "0"+(str)(s)
+				else:
+					ss = (str)(s)
+				dn["time"] = hs+":"+ms+":"+ss
+				films.append(dn)
+	return render(request, "movie/index.html", {"films":films, "country":country})

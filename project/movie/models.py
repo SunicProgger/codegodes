@@ -17,3 +17,6 @@ class Film(models.Model):
 	small_title = models.TextField()
 	large_title = models.TextField()
 	trailer = models.CharField(max_length=100)
+
+	def __str__(self):
+		return name
