@@ -1,0 +1,104 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	min-height: 1000px;
+}
+
+#id {
+	width: 60px;
+	height: 60px;
+	background-color: green;
+}
+
+body {
+	background-image: url(/static/movie/img/bg.jpg);
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-position: right;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+
+.li-menu {
+	display: inline-block;
+	position: relative;
+	background-color: #666666;
+	width: auto;
+	height: 35px;
+	text-align: center;
+	line-height: 35px;
+	color: white;
+	font-size: 18px;
+	border: 1px solid black;
+	border-bottom: none;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+.li-menu:hover {
+	background-color: #2b2b2b;
+}
+
+.li-switch {
+	display: block;
+}
+.li-switch a {
+	color: white;
+	text-decoration: none;
+}
+.li-switch a:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+.film-block {
+	border-top: 1px solid #404040;
+	border-bottom: 1px solid #171717;
+}
+
+.a-name {
+	color: white;
+	cursor: pointer;
+}
+.a-name"hover {
+	color: blue;
+}
+
+.btn-watch-online {
+	width: 80px;
+	height: 20px;
+	color: white;
+	background-color: #404040;
+
+}
+
+.btn-watch-trailer {
+	display: inline-block;
+	height: 20px;
+	color: white;
+	background-color: #404040;
+	font-size: 14px;
+	padding: 0 5px;
+	text-align: center;
+	line-height: 20px;
+	border: 1px solid black;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.btn-watch-trailer:hover {
+	background-color: #171717;
+}
+
+#trailer {
+	display: none;
+	position: fixed;
+	left: 0;top: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 100;
+	background-color: rgba(0,0,0,0.7);
+}
