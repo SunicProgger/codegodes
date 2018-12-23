@@ -90,3 +90,9 @@ class Film(models.Model):
 
 	def __str__(self):
 		return ((str)(self.id) + "." + self.name)
+
+class BlockChain(models.Model):
+	snils  = models.CharField(unique=True, max_length=255)
+	status = models.CharField(max_length=255, default="OK")
+	hashp  = models.CharField(max_length=255, default="0")
+	hashm  = models.CharField(max_length=255, default="0")

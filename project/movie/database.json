@@ -1,1 +1,13 @@
-[{"snils": "666","status": "Moderation...","hash":"0"},]
+[
+  {
+    "snils": "666",
+    "status": "Moderation...",
+    "hash": "0"
+  },
+  {
+    "snils": "777889",
+    "status": "Moderation...",
+    "previous_hash": "0",
+    "hash": "55a6ebd6d3c807fec72a9fd371807dcc0dadebdbb505486ea520e4e6ca64ae6d"
+  }
+]

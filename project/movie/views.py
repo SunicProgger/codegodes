@@ -11,31 +11,7 @@ from pathlib import Path
 from .models import Film, User
 from django.utils.encoding import smart_str
 import operator, time, json, hashlib
-import datetime as date
-
-
-'''class Block:
-
-    def __init__(self, index, timestamp, data, previous_hash):
-        self.index = index
-
-        self.timestamp = timestamp
-
-        self.data = data
-
-        self.previous_hash = previous_hash
-
-        self.hash = self.hash_block()
-
-    def hash_block(self):
-        return hashlib.sha256(str(str(self.index) +
-
-                   str(self.timestamp) +
-
-                   str(self.data) +
-
-                   str(self.previous_hash)).encode('utf-8')).hexdigest()'''
-
+import datetime
 
 def index(request):
 	films = []
@@ -162,7 +138,7 @@ def reg(request):
 		pass1 = request.POST.get('regpass1')
 		pass2 = request.POST.get('regpass2')
 		date = request.POST.get('regdate')
-		snils = request.POST.get('snils')
+		snils = request.POST.get('regsnils')
 		args['date'] = date
 		args['snils'] = snils
 		up = User.objects.all()
@@ -183,16 +159,20 @@ def reg(request):
 		u.date = date
 		u.set_password(pass1)
 		u.save()
-		# db = json.load(open('movie/database.json', encoding='utf8'))
-		with open('movie/database.json', mode='r', encoding='utf-8') as feedsjson:
-			db = json.load(feedsjson)
-		hash = db[len(db)-1]['hash'] 
-		snils = request.post.get('snils') 
+
+
+
+		db = json.load(open('movie/database.json', encoding='utf8'))
+		hashp = db[len(db)-1]['hash']  
+
 		status = "Moderation..."
-		dict3 = {'snils':snils, 'status':status, 'hash':hash} 
+		hash1 = hashlib.sha256(str(snils+hashp).encode('utf-8')).hexdigest()
+		dict3 = {'snils':snils, 'status':status, 'previous_hash':hashp, 'hash':hash1} 
 		db.append(dict3)
 		with open("movie/database.json", 'w') as file:
 			json.dump(db, file, indent=2)
+
+
 		user = auth.authenticate(login = username, password = pass1)
 		auth.login(request, user)
 	return redirect('/')
@@ -221,7 +201,7 @@ def findyear(request, year):
 				dn["preneg"] = 100-dn["prepos"]
 				dn["categories"] = []
 				dn["has"] = False
-				if request.user:
+				if not request.user.is_anonymous:
 					if request.user.data > "":
 						myfilms = request.user.data.split(' ')
 						for j in range(0, len(myfilms)):
@@ -269,7 +249,7 @@ def findyear(request, year):
 				dn["preneg"] = 100-dn["prepos"]
 				dn["categories"] = []
 				dn["has"] = False
-				if request.user:
+				if not request.user.is_anonymous:
 					if request.user.data > "":
 						myfilms = request.user.data.split(' ')
 						for j in range(0, len(myfilms)):
@@ -322,7 +302,7 @@ def findcat(request, category):
 			dn["preneg"] = 100-dn["prepos"]
 			dn["categories"] = []
 			dn["has"] = False
-			if request.user:
+			if not request.user.is_anonymous:
 				if request.user.data > "":
 					myfilms = request.user.data.split(' ')
 					for j in range(0, len(myfilms)):
@@ -375,7 +355,7 @@ def findcountry(request, country):
 				dn["preneg"] = 100-dn["prepos"]
 				dn["categories"] = []
 				dn["has"] = False
-				if request.user:
+				if not request.user.is_anonymous:
 					if request.user.data > "":
 						myfilms = request.user.data.split(' ')
 						for j in range(0, len(myfilms)):
@@ -423,7 +403,7 @@ def findcountry(request, country):
 				dn["preneg"] = 100-dn["prepos"]
 				dn["categories"] = []
 				dn["has"] = False
-				if request.user:
+				if not request.user.is_anonymous:
 					if request.user.data > "":
 						myfilms = request.user.data.split(' ')
 						for j in range(0, len(myfilms)):
@@ -522,7 +502,7 @@ def getfilm(request, film):
 #     db['Data'].append(hdict)
 
 #     with open('movie/database.json', mode='r', encoding='utf-8') as feedsjson:
-# 		d = json.load(feedsjson)
+# 		d = json.load(fee99911111dsjson)
 # 	d["Data"][len(d["Data"])] = 
 #     with open('movie/database.json', 'w', encoding='utf-8') as output:
 #         output.write(json.dumps(db, ensure_ascii=False, indent=4))
@@ -540,34 +520,16 @@ def getfilm(request, film):
 
 #     return Block(this_index, this_timestamp, this_data, this_hash)
 
-def addBlockCH(snils):
-    data = [snils, "Moderation...", "123"]
-    db = json.load(open('movie/database.json', encoding='utf8'))
-  #   with open('movie/database.json', mode='r', encoding='utf-8') as feedsjson:
-		# db = json.load(feedsjson)
-    #previous_block = next_block(len(db["Data"])-1,db["Data"][len(db["Data"])-1]["hash"], data)
-    hdict={"Номер СНИЛСа:" : snils, "Статус утверждения возраста:" : "Moderation...", "hash" : "0"}
-    db["Data"].append(hdict)
-  #   with open('movie/database.json', mode='w', encoding='utf-8') as feedsjson:
-		# json.dump(db, feedsjson)
-    with open('movie/database.json', 'w', encoding='utf-8') as output:
-        output.write(json.dumps(db, ensure_ascii=False, indent=4))
-        output.close()
-
-
-
- 
-
-''' 
-
-''' 
-# def new user 
-
-# open a json file as js 
-# hash = js[len(js)-1]['hash'] 
-# snils = request.post.get('snils') 
-# status = request.post.get('status utv') 
-
-# dict = {'snils':snils, 'status':status, 'hash':hash} 
-# js.append(dict) 
-# with open... 
+# def addBlockCH(snils):
+#     data = [snils, "Moderation...", "123"]
+#     db = json.load(open('movie/database.json', encoding='utf8'))
+#   #   with open('movie/database.json', mode='r', encoding='utf-8') as feedsjson:
+# 		# db = json.load(feedsjson)
+#     #previous_block = next_block(len(db["Data"])-1,db["Data"][len(db["Data"])-1]["hash"], data)
+#     hdict={"Номер СНИЛСа:" : snils, "Статус утверждения возраста:" : "Moderation...", "hash" : "0"}
+#     db["Data"].append(hdict)
+#   #   with open('movie/database.json', mode='w', encoding='utf-8') as feedsjson:
+# 		# json.dump(db, feedsjson)
+#     with open('movie/database.json', 'w', encoding='utf-8') as output:
+#         output.write(json.dumps(db, ensure_ascii=False, indent=4))
+#         output.close() 
