@@ -7,7 +7,7 @@ from datetime import datetime, date, time
 # Create your models here.
 
 class UserManage(BaseUserManager):
-	def create_user(self, login, password=None, active=True, is_admin=False, is_superuser=False, date=None, films=""):
+	def create_user(self, login, password=None, active=True, is_admin=False, is_superuser=False, date=None, data="", snils=""):
 		if not login:
 			raise ValueError("Users must have a login address")
 		if not password:
@@ -18,7 +18,8 @@ class UserManage(BaseUserManager):
 		user_obj.admin = is_admin
 		user_obj.is_superuser = is_superuser
 		user_obj.date = date
-		user_obj.films = films
+		user_obj.data = data
+		user_obj.snils = snils
 		user_obj.save(using=self._db)
 		return user_obj
 
@@ -31,8 +32,9 @@ class User(AbstractBaseUser):
 	active       = models.BooleanField(default=True)
 	admin        = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
-	date         = models.DateField(blank=True, null=True, verbose_name="Date of birthday")
-	data         = models.TextField(default="")
+	date         = models.DateField(null=True, blank=True, verbose_name="date of birthday")
+	data         = models.TextField(default="", null=True, blank=True, verbose_name="Activated movies")
+	snils        = models.CharField(max_length=255, unique=True, default="snils", verbose_name="SNILS", null=True, blank=True)
 	
 	USERNAME_FIELD = 'login'
 	REQUIRED_FIELDS = []
@@ -69,20 +71,20 @@ class User(AbstractBaseUser):
 
 class Film(models.Model):
 	name        = models.CharField(max_length=255)
-	year        = models.IntegerField(default=0)
-	date        = models.CharField(max_length=100, verbose_name="date of release")
+	year        = models.IntegerField()
+	date        = models.CharField(max_length=100, verbose_name="date of release", default="")
 	age         = models.IntegerField()
 	country     = models.CharField(max_length=100)
 	cost        = models.IntegerField(default=0)
-	time        = models.IntegerField()
+	time        = models.IntegerField(default=7200)
 	director    = models.CharField(max_length=100)
-	roles       = models.TextField(default="...")
+	roles       = models.TextField(default="")
 	pos         = models.IntegerField()
 	neg         = models.IntegerField()
 	image       = models.FileField()
 	trailer     = models.CharField(max_length=100)
-	link        = models.CharField(max_length=255, default="yandex.ru")
-	categories  = models.CharField(max_length=255, default="others")
+	link        = models.CharField(max_length=255, null=True, blank=True, default="")
+	categories  = models.CharField(max_length=255, null=True, blank=True, default="")
 	small_title = models.TextField()
 	large_title = models.TextField()
 

@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
 	list_filter = ('admin',)
 	fieldsets = (
 		(None, {'fields': ('login', 'password')}),
-		('Personal info', {'fields': ('date','data')}),
+		('Personal info', {'fields': ('snils','date','data')}),
 		('Properties', {'fields': ('admin',)}),
 	)
 	add_fieldsets = (
@@ -33,6 +33,7 @@ class UserAdmin(BaseUserAdmin):
 
 class FilmAdmin:
 	list_display = ('id', 'name')
+
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Film)

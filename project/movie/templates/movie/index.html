@@ -2,7 +2,7 @@
 
 {% block include %}
 {% if year %}
-<div class="row d-flex justify-content-center" style="color: white;font-size: 18px;border-bottom: 1px solid #171717;margin: 0;">Movies released in {{year}} year.</div>
+<div class="row d-flex justify-content-center" style="color: white;font-size: 18px;border-bottom: 1px solid #171717;margin: 0;">Movies released {% if year == '2014' %}before 2015 year{% else %}in {{year}} year{% endif %}</div>
 {% endif %}
 {% if category %}
 <div class="row d-flex justify-content-center" style="color: white;font-size: 18px;border-bottom: 1px solid #171717;margin: 0;">{{category}} movies</div>
@@ -13,7 +13,7 @@
 {% for i in films %}
 <div class="col-12 film-block" style="padding: 0;">
 	<div class="col-12 d-flex justify-content-between" style="padding: 10px;">
-		<div class="col-auto" style="color: white;font-size: 18px;font-weight: bold;"><a class="a-name" href="/{{i.id}}" style="{% if user.get_age < i.age %}pointer-events: none;{% endif %}">{{i.name}}</a> <span style="color: yellow;font-size: 20px;">{% if i.cost > 0 %}({{i.cost}}Rub){% else %}(Free){% endif %}</span></div>
+		<div class="col-auto" style="color: white;font-size: 18px;font-weight: bold;"><a class="a-name" href="/{{i.id}}" style="{% if user.get_age < i.age %}pointer-events: none;{% endif %}"><span>{{i.name}}</span></a> <span style="color: yellow;font-size: 20px;">{% if i.cost > 0 %}({{i.cost}}rub){% else %}(Free){% endif %}</span></div>
 		<div class="col-auto" style="width: 150px;height: 5px;margin-top: 10px;">
 			<div class="row d-flex justify-content-between" style="height: 100%"><div style="width: {{i.prepos}}%;background-color: green;height: 100%;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></div><div style="width: {{i.preneg}}%;background-color: red;height: 100%;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"></div></div>
 			<div class="row d-flex justify-content-between"><div style="color: green;font-size: 12px;">{{i.pos}}</div><div style="color: red;font-size: 12px;">{{i.neg}}</div></div>
@@ -25,13 +25,13 @@
 			<div class="col-7" style="position: relative;">
 				<div class="col-12" style="max-height: 200px;overflow: hidden;padding: 0;margin: 0;"><span style="font-size: 14px;text-align: justify;">{{i.small_title}}</span></div>
 				<div class="col-12" style="position: absolute;height: 100px;bottom: 0;">
-					<span style="font-weight: bold;">Release year: </span>{% if i.year > 2014 %}<a class="a-name" href="/y{{i.year}}/">{{i.year}}</a>{% else %}{{i.year}}{% endif %}
+					<span style="font-weight: bold;">Release year: </span>{% if i.year > 2014 %}<a class="a-name" href="/y{{i.year}}/"><span>{{i.year}}</span></a>{% else %}<a class="a-name" href="/y2014/"><span>{{i.year}}</span></a>{% endif %}
 					<br>
-					<span style="font-weight: bold;">Country: </span><a class="a-name" href="/country_{{i.country}}">{{i.country}}</a>
+					<span style="font-weight: bold;">Country: </span><a class="a-name" href="/country_{{i.country}}"><span>{{i.country}}</span></a>
 					<br>
-					<span style="font-weight: bold;">Categories:</span> {% for j in i.categories %}<a class="a-name" href="/category_{{j}}">{{j}}</a> {% endfor %} 
+					<span style="font-weight: bold;">Categories:</span> {% for j in i.categories %}<a class="a-name" href="/category_{{j}}"><span>{{j}}</span></a> {% endfor %} 
 					<br>
-					<span style="font-weight: bold;">Time:</span> {{i.time}}
+					<span style="font-weight: bold;">Time:</span> <span>{{i.time}}</span>
 					<br>
 				</div>
 				<div style="position: absolute;bottom: 50px;right: 10px;width: 60px;height: 60px;border: 5px solid darkorange;border-radius: 60px;text-align: center;padding-top: 4px;"><span style="color: darkorange;font-size: 24px;font-weight: bold;margin: auto 0;">{{i.age}}+</span></div>

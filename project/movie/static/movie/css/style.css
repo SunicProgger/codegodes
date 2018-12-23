@@ -5,12 +5,6 @@ body, html {
 	min-height: 1000px;
 }
 
-#id {
-	width: 60px;
-	height: 60px;
-	background-color: green;
-}
-
 body {
 	background-image: url(/static/movie/img/bg.jpg);
 	-webkit-background-size: cover;
@@ -34,6 +28,7 @@ body {
 	border-bottom: none;
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
+	margin-left: -1px;
 	padding: 0 10px;
 	cursor: pointer;
 }
@@ -50,7 +45,6 @@ body {
 	text-decoration: none;
 }
 .li-switch a:hover {
-	color: blue;
 	text-decoration: underline;
 }
 
@@ -63,8 +57,9 @@ body {
 	color: white;
 	cursor: pointer;
 }
-.a-name"hover {
-	color: blue;
+.a-name:hover {
+	color: white;
+	text-decoration: underline;
 }
 
 .btn-watch-online {
@@ -107,15 +102,16 @@ body {
 	text-decoration: underline;
 }
 
-#auth-block {
+#auth-block, #registration-block {
 	display: none;
 	position: absolute;
-	right: 10px;
+	right: 30px;
 	top: 30px;
 	background-color: white;
 	width: 230px;
 	border: 1px solid black;
 	border-radius: 5px;
+	padding-bottom: 5px;
 }
 
 .auth-input {
@@ -128,19 +124,28 @@ body {
 	padding-left: 2px;
 }
 
-#register-link:hover {
+#register-link:hover, #auth-link:hover {
 	text-decoration: underline;
+}
+
+.error {
+	color: red;
+	font-size: 12px;
+	width: 100%;
+	margin-left: 15px;
+	margin-bottom: 0;
 }
 
 #auth-button {
 	width: 60px;
-	height: 20px;
+	height: 25px;
 	background-color: green;
 	color: white;
 	border: none;
 	border-radius: 5px;
 	padding: 1px 5px;
 	line-height: 20px;
+	padding-bottom: 3px;
 	margin-left: 15px;
 	cursor: pointer;
 }
