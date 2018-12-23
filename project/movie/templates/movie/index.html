@@ -45,13 +45,14 @@
 			{% else %}
 			<a href="/{{i.id}}"><div class="btn-watch-trailer">Watch online</div></a>
 			{% endif %}
-			{% elif user.get_age >= i.age %}
+			{% else %}
+			{% if user.get_age >= i.age %}
 			<div class="btn-watch-trailer" style="position: relative;"><span>Buy now</span><iframe src="https://money.yandex.ru/quickpay/button-widget?targets=Оплата..&" style="position: absolute;left: 0;top: 0;opacity: 0;width: 65px;height: 20px;" frameborder="0" allowtransparency="true" scrolling="no"></iframe></div>{% else %}<div class="btn-watch-trailer" onclick="alert_age({{i.age}});">Buy now</div>
 			{% endif %}{% endif %}
 			<div class="btn-watch-trailer" onclick="trailer('{{i.trailer}}');">Trailer</div>
 		</div>
+		{% endif %}
 	</div>
-
 </div>
 {% endfor %}
 {% endblock %}
