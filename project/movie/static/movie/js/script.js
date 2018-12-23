@@ -69,3 +69,15 @@ $('#auth-link').click(function() {
 	$('#registration-block').hide();
 	$('#auth-block').show();
 });
+
+function alert_age(age) {
+	text = "this film is disabled for watching for people younger than " + age + "!";
+	$('#alert-age').text(text);
+	$('#alert-age').show();
+	setTimeout(function() {
+		$('#alert-age').hide();
+	}, 5000);
+}
+$('#alert-age').click(function() {
+	$(this).hide();
+});

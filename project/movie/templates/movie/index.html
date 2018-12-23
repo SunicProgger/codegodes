@@ -37,12 +37,17 @@
 				<div style="position: absolute;bottom: 50px;right: 10px;width: 60px;height: 60px;border: 5px solid darkorange;border-radius: 60px;text-align: center;padding-top: 4px;"><span style="color: darkorange;font-size: 24px;font-weight: bold;margin: auto 0;">{{i.age}}+</span></div>
 			</div>
 		</div>
+		{% if user.is_authenticated %}
 		<div class="col-12 inline-row" style="margin-top: 10px;margin-left: 15px;">
 			{% if i.has or i.cost == 0 %}
-			<a href="/{{i.id}}" style="{% if user.get_age < i.age %}pointer-events: none;{% endif %}"><div class="btn-watch-trailer">Watch online</div></a>
+			{% if user.get_age < i.age %}
+			<div class="btn-watch-trailer" onclick="alert_age({{i.age}});">Watch online</div>
 			{% else %}
-			<div class="btn-watch-trailer" style="position: relative;"><span>Buy now</span>s{% if user.is_authenticated %}<iframe src="https://money.yandex.ru/quickpay/button-widget?targets=Оплата..&" style="position: absolute;left: 0;top: 0;opacity: 0;width: 65px;height: 20px;{% if user.get_age < i.age %}pointer-events: none;{% endif %}" frameborder="0" allowtransparency="true" scrolling="no"></iframe>{% else %}<div style="width: 65px;height: 20px;position: absolute;left: 0;top: 0;" onclick="auth();"></div>{% endif %}</div>
+			<a href="/{{i.id}}"><div class="btn-watch-trailer">Watch online</div></a>
 			{% endif %}
+			{% elif user.get_age >= i.age %}
+			<div class="btn-watch-trailer" style="position: relative;"><span>Buy now</span><iframe src="https://money.yandex.ru/quickpay/button-widget?targets=Оплата..&" style="position: absolute;left: 0;top: 0;opacity: 0;width: 65px;height: 20px;" frameborder="0" allowtransparency="true" scrolling="no"></iframe></div>{% else %}<div class="btn-watch-trailer" onclick="alert_age({{i.age}});">Buy now</div>
+			{% endif %}{% endif %}
 			<div class="btn-watch-trailer" onclick="trailer('{{i.trailer}}');">Trailer</div>
 		</div>
 	</div>

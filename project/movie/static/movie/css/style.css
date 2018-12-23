@@ -154,3 +154,19 @@ body {
 	text-decoration: underline;
 	background-color: darkgreen;
 }
+
+#alert-age {
+	display: none;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	width: 250px;
+	border: 1px solid black;
+	background-color: yellow;
+	color: black;
+	font-size: 18px;
+	z-index: 102;
+	border-radius: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
